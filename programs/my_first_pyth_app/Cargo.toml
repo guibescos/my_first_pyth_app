@@ -1,0 +1,20 @@
+[package]
+name = "my_first_pyth_app"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "my_first_pyth_app"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.28.0"
+pyth-solana-receiver = {git = "https://github.com/pyth-network/pyth-crosschain", branch = "solana/bump-raw-vaas"}
