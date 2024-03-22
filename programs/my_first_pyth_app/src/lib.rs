@@ -1,23 +1,23 @@
-use anchor_lang::prelude::Pubkey;
 use anchor_lang::prelude::*;
-use pyth_solana_receiver_state::price_update::{PriceUpdateV1, VerificationLevel};
-use solana_program::pubkey;
+use anchor_lang::solana_program::{native_token::LAMPORTS_PER_SOL, system_instruction};
+use pyth_solana_receiver_sdk::price_update::{get_feed_id_from_hex, PriceUpdateV2};
 
 declare_id!("2e5gZD3suxgJgkCg4pkoogxDKszy1SAwokz8mNeZUj4M");
 
 pub const MAXIMUM_AGE: u64 = 24 * 3600 * 365;
-pub const FEED_ID: Pubkey = pubkey!("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG");
+pub const FEED_ID: &str = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d";
 
 #[program]
 pub mod my_first_pyth_app {
-
-    use anchor_lang::solana_program::{native_token::LAMPORTS_PER_SOL, system_instruction};
-
     use super::*;
 
     pub fn initialize(ctx: Context<Initialize>, amount_in_usd: u64) -> Result<()> {
         let price_update = &mut ctx.accounts.price_update;
-        let price = price_update.get_price_no_older_than(&Clock::get()?, MAXIMUM_AGE, &FEED_ID)?;
+        let price = price_update.get_price_no_older_than(
+            &Clock::get()?,
+            MAXIMUM_AGE,
+            &get_feed_id_from_hex(FEED_ID)?,
+        )?;
 
         let amount_in_lamports = LAMPORTS_PER_SOL
             .checked_mul(10_u64.pow(price.exponent.abs().try_into().unwrap()))
@@ -34,10 +34,11 @@ pub mod my_first_pyth_app {
         );
         anchor_lang::solana_program::program::invoke(
             &transfer_instruction,
-            &[ctx.accounts.payer.to_account_info(), ctx.accounts.destination.to_account_info()],
+            &[
+                ctx.accounts.payer.to_account_info(),
+                ctx.accounts.destination.to_account_info(),
+            ],
         )?;
-        
-        
 
         Ok(())
     }
@@ -51,6 +52,6 @@ pub struct Initialize<'info> {
     #[account(mut)]
     /// CHECK : Just a destination
     pub destination: AccountInfo<'info>,
-    pub price_update: Account<'info, PriceUpdateV1>,
+    pub price_update: Account<'info, PriceUpdateV2>,
     pub system_program: Program<'info, System>,
 }
