@@ -3,7 +3,7 @@
   "name": "my_first_pyth_app",
   "instructions": [
     {
-      "name": "initialize",
+      "name": "send",
       "accounts": [
         {
           "name": "payer",

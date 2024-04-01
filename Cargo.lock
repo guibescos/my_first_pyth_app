@@ -1041,7 +1041,7 @@ version = "0.1.0"
 dependencies = [
  "ahash 0.8.6",
  "anchor-lang",
- "pyth-solana-receiver-state",
+ "pyth-solana-receiver-sdk",
  "solana-program",
 ]
 
@@ -1238,9 +1238,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "pyth-solana-receiver-state"
+name = "pyth-solana-receiver-sdk"
 version = "0.1.0"
-source = "git+https://github.com/pyth-network/pyth-crosschain?branch=solana/rust-sdk#3071775f68b69b504f837a57ae91b5ba82bdde89"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "937c8595148fb2a9a90439daf6a371a5b3c9fcd9b636f26d36ae31d6846d4339"
 dependencies = [
  "anchor-lang",
  "hex",
@@ -1251,7 +1252,8 @@ dependencies = [
 [[package]]
 name = "pythnet-sdk"
 version = "2.0.0"
-source = "git+https://github.com/pyth-network/pyth-crosschain?branch=solana/rust-sdk#3071775f68b69b504f837a57ae91b5ba82bdde89"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f246dc1ea2966f811d894590014f9163942b33255fc7560fe629726a721aad1"
 dependencies = [
  "bincode",
  "borsh 0.10.3",

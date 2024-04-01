@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@pythnetwork/price-service-client": "^1.8.2",
-    "@pythnetwork/pyth-solana-receiver": "file:../../repos/pyth-crosschain/target_chains/solana/sdk/js",
+    "@pythnetwork/pyth-solana-receiver": "file:../../repos/pyth-crosschain/target_chains/solana/sdk/js/pyth_solana_receiver",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",

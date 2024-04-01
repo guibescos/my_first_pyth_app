@@ -3,7 +3,7 @@ export type MyFirstPythApp = {
   "name": "my_first_pyth_app",
   "instructions": [
     {
-      "name": "initialize",
+      "name": "send",
       "accounts": [
         {
           "name": "payer",
@@ -44,7 +44,7 @@ export const IDL: MyFirstPythApp = {
   "name": "my_first_pyth_app",
   "instructions": [
     {
-      "name": "initialize",
+      "name": "send",
       "accounts": [
         {
           "name": "payer",

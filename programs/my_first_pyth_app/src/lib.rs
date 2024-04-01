@@ -9,14 +9,17 @@ pub const FEED_ID: &str = "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4
 
 #[program]
 pub mod my_first_pyth_app {
+    use pyth_solana_receiver_sdk::price_update::VerificationLevel;
+
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>, amount_in_usd: u64) -> Result<()> {
+    pub fn send(ctx: Context<Send>, amount_in_usd: u64) -> Result<()> {
         let price_update = &mut ctx.accounts.price_update;
-        let price = price_update.get_price_no_older_than(
+        let price = price_update.get_price_no_older_than_with_custom_verification_level(
             &Clock::get()?,
             MAXIMUM_AGE,
             &get_feed_id_from_hex(FEED_ID)?,
+            VerificationLevel::Partial{num_signatures: 5}
         )?;
 
         let amount_in_lamports = LAMPORTS_PER_SOL
@@ -46,7 +49,7 @@ pub mod my_first_pyth_app {
 
 #[derive(Accounts)]
 #[instruction(amount_in_usd : u64)]
-pub struct Initialize<'info> {
+pub struct Send<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
     #[account(mut)]
